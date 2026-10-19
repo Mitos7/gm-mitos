@@ -14,16 +14,18 @@ a{color:inherit;text-decoration:none}button{font:inherit}a:focus-visible,button:
 .world:hover,.world:focus-visible{flex-grow:1.6}.world:before{content:"";position:absolute;z-index:-2;inset:-2%;background-position:center center;background-size:cover;transition:transform 1.6s ease-out,filter 1.6s ease-out;filter:brightness(.72)}
 .world:hover:before,.world:focus-visible:before{transform:scale(1.05);filter:brightness(1)}
 .world-aebraeth:before{background-image:url("assets/aebraeth-portal.webp");background-position:center 42%}
-.world-starcity:before{background-image:url("assets/starcity-portal.webp");background-position:center 50%}
+.world-starcity:before{background-image:url("assets/starcity-portal.webp");background-position:center 50%;filter:brightness(.64) saturate(.85) contrast(.98)}
 .world:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.46) 0,rgba(0,0,0,0) 27%,rgba(0,0,0,.04) 40%,rgba(2,5,8,.83) 100%)}
 .world-aebraeth:after{background:linear-gradient(180deg,rgba(8,5,3,.44),transparent 29%,rgba(8,4,4,.02) 43%,rgba(12,6,4,.84) 100%)}
-.world-starcity:after{background:linear-gradient(180deg,rgba(0,7,19,.43),transparent 29%,rgba(0,7,19,.08) 43%,rgba(0,8,19,.90) 100%)}
+.world-starcity:after{background:linear-gradient(180deg,rgba(0,7,19,.45) 0%,rgba(1,10,23,.04) 25%,rgba(0,6,16,.12) 40%,rgba(0,8,21,.47) 65%,rgba(0,6,14,.93) 100%)}
+.world-starcity:hover:before,.world-starcity:focus-visible:before{filter:brightness(.84) saturate(.94) contrast(1)}
+.world-starcity .world-sub{color:#dce5ea}
 .world-content{width:100%;padding:clamp(30px,3.4vw,75px) clamp(27px,3.35vw,60px) clamp(49px,8.4vh,88px);position:relative;z-index:2;text-shadow:0 3px 30px rgba(0,0,0,.45)}
 .eyebrow{font-size:clamp(.67rem,.76vw,.78rem);font-weight:800;letter-spacing:.29em;text-transform:uppercase}
 .world-aebraeth .eyebrow{color:var(--gold)}.world-starcity .eyebrow{color:var(--cyan)}
 .world-title{margin:19px 0 18px;line-height:.83;font-weight:600;color:#faf7ed;white-space:normal}
 .world-aebraeth .world-title{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(4.3rem,9.4vw,10rem);font-weight:500;letter-spacing:-.068em}
-.world-starcity .world-title{font-family:"Chakra Petch",sans-serif;font-size:clamp(5.2rem,10.8vw,11rem);font-weight:600;line-height:.86;letter-spacing:-.02em;color:#ecf9ff;text-transform:uppercase}
+.world-starcity .world-title{font-family:"Chakra Petch",sans-serif;font-size:clamp(5rem,10.1vw,10.5rem);font-weight:600;line-height:.89;letter-spacing:-.02em;color:#e0eef4;text-transform:uppercase}
 .world-starcity .world-title span{display:block}
 .world-sub{color:#f5efea;max-width:450px;font-size:clamp(.89rem,1.35vw,1.12rem);line-height:1.6;font-weight:500;letter-spacing:-.02em}
 .world-action{display:flex;align-items:center;gap:16px;margin-top:30px;font-size:.72rem;letter-spacing:.25em;font-weight:800;text-transform:uppercase}
