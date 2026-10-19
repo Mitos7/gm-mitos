@@ -10,9 +10,9 @@
 a{color:inherit;text-decoration:none}button{font:inherit}a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:-4px}
 .portal{height:100svh;min-height:590px;position:relative;isolation:isolate;overflow:hidden}
 .worlds{display:flex;height:100%;width:100%}
-.world{position:relative;flex:1 1 50%;min-width:0;display:flex;align-items:flex-end;isolation:isolate;overflow:hidden;transition:flex-grow .85s cubic-bezier(.2,.7,.1,1)}
-.world:hover,.world:focus-visible{flex-grow:1.1}.world:before{content:"";position:absolute;z-index:-2;inset:-2%;background-position:center center;background-size:cover;transition:transform 1.35s cubic-bezier(.2,.7,.1,1),filter .7s;filter:brightness(.78)}
-.world:hover:before,.world:focus-visible:before{transform:scale(1.055);filter:brightness(.92)}
+.world{position:relative;flex:1 1 0%;min-width:0;display:flex;align-items:flex-end;isolation:isolate;overflow:hidden;transition:flex-grow .9s cubic-bezier(.2,.7,.1,1)}
+.world:hover,.world:focus-visible{flex-grow:1.6}.world:before{content:"";position:absolute;z-index:-2;inset:-2%;background-position:center center;background-size:cover;transition:transform 1.6s ease-out,filter 1.6s ease-out;filter:brightness(.72)}
+.world:hover:before,.world:focus-visible:before{transform:scale(1.05);filter:brightness(1)}
 .world-aebraeth:before{background-image:url("assets/aebraeth-portal.webp");background-position:center 42%}
 .world-starcity:before{background-image:url("assets/starcity-portal.webp");background-position:center 50%}
 .world:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.46) 0,rgba(0,0,0,0) 27%,rgba(0,0,0,.04) 40%,rgba(2,5,8,.83) 100%)}
@@ -23,7 +23,7 @@ a{color:inherit;text-decoration:none}button{font:inherit}a:focus-visible,button:
 .world-aebraeth .eyebrow{color:var(--gold)}.world-starcity .eyebrow{color:var(--cyan)}
 .world-title{margin:19px 0 18px;line-height:.83;font-weight:600;color:#faf7ed;white-space:normal}
 .world-aebraeth .world-title{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(4.3rem,9.4vw,10rem);font-weight:500;letter-spacing:-.068em}
-.world-starcity .world-title{font-family:"Chakra Petch",sans-serif;font-size:clamp(5.2rem,10.6vw,12rem);font-weight:700;line-height:.88;letter-spacing:-.078em;color:#ecf9ff;text-transform:uppercase}
+.world-starcity .world-title{font-family:"Chakra Petch",sans-serif;font-size:clamp(5.2rem,10.8vw,11rem);font-weight:600;line-height:.86;letter-spacing:-.02em;color:#ecf9ff;text-transform:uppercase}
 .world-starcity .world-title span{display:block}
 .world-sub{color:#f5efea;max-width:450px;font-size:clamp(.89rem,1.35vw,1.12rem);line-height:1.6;font-weight:500;letter-spacing:-.02em}
 .world-action{display:flex;align-items:center;gap:16px;margin-top:30px;font-size:.72rem;letter-spacing:.25em;font-weight:800;text-transform:uppercase}
