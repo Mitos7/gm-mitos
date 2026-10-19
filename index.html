@@ -1,125 +1,74 @@
 <!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#080709">
-  <meta name="description" content="GM MITOS · Elige tu mundo: Aebraeth, fantasía épica, o Star City, universo Cyberpunk RED.">
-  <meta property="og:title" content="GM MITOS · Elige tu mundo">
-  <meta property="og:description" content="Dos mundos. Una historia que comienza con tu elección.">
-  <title>GM MITOS · Elige tu mundo</title>
-  <link rel="icon" href="./favicon.ico" sizes="any">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root { color-scheme:dark; --gm-burgundy:#780606; --gm-gold:#EABE3F; --gm-black:#070709; --white:#f6f2e9; --serif:"Cormorant Garamond",Georgia,serif; --tech:"Chakra Petch",Arial,sans-serif; --sans:"Manrope",system-ui,sans-serif; }
-    *,*::before,*::after{box-sizing:border-box}
-    html{height:100%;scroll-behavior:smooth}
-    body{margin:0;min-width:320px;min-height:100%;overflow:hidden;background:var(--gm-black);color:var(--white);font-family:var(--sans);-webkit-font-smoothing:antialiased}
-    .portal{position:relative;height:100vh;height:100svh;isolation:isolate;overflow:hidden}
-    .worlds{display:flex;width:100%;height:100%}
-    .world{position:relative;display:block;min-width:0;flex:1;isolation:isolate;padding:0;border:0;margin:0;color:inherit;background:var(--gm-black);text-align:left;cursor:pointer;overflow:hidden;transition:flex 850ms cubic-bezier(.22,.7,.19,1)}
-    .world::before{content:"";position:absolute;z-index:-2;inset:-3%;background-position:center;background-size:cover;filter:saturate(.98);transform:scale(1.015);transition:transform 1100ms cubic-bezier(.2,.75,.2,1),filter 700ms}
-    .world::after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(180deg,#08050b90 0%,#06070b15 25%,#06070b00 48%,#06050a58 67%,#030308e8 100%)}
-    .world-aebraeth::before{background-image:url("./assets/aebraeth-portal.webp");background-position:53% center}
-    .world-starcity::before{background-image:url("./assets/starcity-portal.webp");background-position:52% center}
-    .world-aebraeth{border-right:1px solid #eabe3f38}
-    .world:hover,.world:focus-visible,.world[aria-pressed="true"]{flex:1.12}
-    .world:hover::before,.world:focus-visible::before,.world[aria-pressed="true"]::before{transform:scale(1.075);filter:saturate(1.13)}
-    .world:focus-visible{outline:3px solid var(--gm-gold);outline-offset:-5px}
-    .world-content{position:absolute;inset:auto 0 0 0;padding:clamp(24px,4.5vw,78px) clamp(23px,5vw,100px) clamp(45px,6vh,88px);text-shadow:0 3px 22px #000c;transform:translateY(0);transition:transform .6s}
-    .world:hover .world-content{transform:translateY(-9px)}
-    .world-genre{font:700 .69rem/1.4 var(--sans);letter-spacing:.26em;color:var(--gm-gold);text-transform:uppercase}
-    .world-starcity .world-genre{color:#99e9ff}
-    .world h2{margin:16px 0 6px;font:600 clamp(3.55rem,7.3vw,8rem)/.84 var(--serif);letter-spacing:-.045em;color:#f5e7cc}
-    .world-starcity h2{font-family:var(--tech);font-size:clamp(2.6rem,5.3vw,6rem);line-height:1.02;letter-spacing:-.035em;font-weight:600;color:#e8faff;text-shadow:0 3px 24px #051018,0 0 26px #7de8ff38}
-    .world-desc{display:block;margin:18px 0 25px;font-size:clamp(.85rem,1.05vw,1.05rem);line-height:1.7;max-width:390px;color:#eff0efe0;font-weight:500}
-    .world-enter{display:inline-flex;align-items:center;gap:14px;padding-bottom:9px;border-bottom:1px solid var(--gm-gold);font:700 .75rem var(--sans);text-transform:uppercase;letter-spacing:.16em;color:#fff}
-    .world-starcity .world-enter{border-color:#8ce4ff}
-    .world-enter svg{width:18px;height:18px;transition:transform .35s}
-    .world:hover .world-enter svg{transform:translate(5px,-4px)}
-    .brand{position:absolute;z-index:5;top:clamp(15px,2.6vw,36px);left:50%;transform:translateX(-50%);pointer-events:none;text-align:center;width:min(870px,calc(100% - 30px));text-shadow:0 4px 22px #000b}
-    .brand-logo{display:inline-block;position:relative;font:600 clamp(1.35rem,2.25vw,2.45rem)/1 var(--serif);letter-spacing:.16em;color:var(--gm-gold)}
-    .brand-logo::before,.brand-logo::after{content:"";display:inline-block;vertical-align:middle;height:1px;width:clamp(18px,4vw,73px);margin:0 clamp(8px,2vw,26px);background:linear-gradient(90deg,transparent,var(--gm-gold))}
-    .brand-logo::after{transform:scaleX(-1)}
-    .brand-sub{font:600 clamp(.67rem,1vw,.87rem)/1.4 var(--sans);letter-spacing:.35em;margin-top:15px;color:#f3ede1}
-    .brand-rule{width:62px;height:3px;margin:13px auto 0;background:var(--gm-burgundy);box-shadow:0 0 0 1px #eabe3f88}
-    .divider{position:absolute;z-index:4;left:50%;top:19%;height:58%;transform:translateX(-50%);width:1px;background:linear-gradient(180deg,transparent,#eabe3f3c 15%,#eabe3f91 50%,#eabe3f3c 85%,transparent);pointer-events:none}
-    .selection{position:absolute;z-index:5;left:50%;bottom:13px;transform:translateX(-50%);font-size:.6rem;font-weight:700;letter-spacing:.14em;color:#fff8;background:rgba(11,7,9,.38);padding:5px 11px;border-radius:12px;pointer-events:none;white-space:nowrap}
-    .selection[data-active]{color:var(--gm-gold);background:#0a0809b8}
-    @media(max-width:760px){
-      body{overflow:hidden}
-      .worlds{flex-direction:column}
-      .world{flex:1;min-height:0;width:100%}
-      .world-aebraeth{border-right:0;border-bottom:1px solid #eabe3f58}
-      .world:hover,.world:focus-visible,.world[aria-pressed="true"]{flex:1.02}
-      .world::before{inset:-1%}
-      .world-aebraeth::before{background-position:50% 46%}
-      .world-starcity::before{background-position:52% 43%}
-      .brand{top:12px;width:calc(100% - 16px)}
-      .brand-logo{font-size:1.5rem}
-      .brand-logo::before,.brand-logo::after{width:21px;margin:0 8px}
-      .brand-sub{font-size:.6rem;letter-spacing:.19em;margin-top:5px}
-      .brand-rule{width:38px;height:2px;margin:5px auto}
-      .world-content{padding:10px 23px 29px}
-      .world:first-child .world-content{padding-bottom:20px}
-      .world h2{font-size:clamp(3.35rem,12vw,5.2rem);margin:6px 0 0}
-      .world-starcity h2{font-size:clamp(2.35rem,9.3vw,4.4rem)}
-      .world-genre{font-size:.52rem;letter-spacing:.17em}
-      .world-desc{font-size:.69rem;line-height:1.35;margin:7px 0 11px;max-width:360px}
-      .world-enter{font-size:.6rem;letter-spacing:.12em;padding-bottom:4px;gap:6px}
-      .world-enter svg{width:14px;height:14px}
-      .divider{display:none}
-      .selection{bottom:calc(50% - 14px);font-size:.48rem;background:#08080ad8;border:1px solid #eabe3f60}
-    }
-    @media(max-width:370px) and (max-height:730px){
-      .world-desc{display:none}
-      .world-content{padding-bottom:20px}
-    }
-    @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
-  </style>
-</head>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090708">
+<title>GM MITOS — Elige tu mundo</title><meta name="description" content="Elige tu mundo: Aebraeth, fantasía y leyendas; Star City, una megaciudad cyberpunk.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.ico">
+<style>
+:root{color-scheme:dark;--blood:#780606;--gold:#EABE3F;--black:#090708;--white:#f6f3ed;--cyan:#9eeffb}
+*,*:before,*:after{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--black)}body{font-family:Manrope,system-ui,sans-serif;color:var(--white);overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{font:inherit}a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:-4px}
+.portal{height:100svh;min-height:590px;position:relative;isolation:isolate;overflow:hidden}
+.worlds{display:flex;height:100%;width:100%}
+.world{position:relative;flex:1 1 50%;min-width:0;display:flex;align-items:flex-end;isolation:isolate;overflow:hidden;transition:flex-grow .85s cubic-bezier(.2,.7,.1,1)}
+.world:hover,.world:focus-visible{flex-grow:1.1}.world:before{content:"";position:absolute;z-index:-2;inset:-2%;background-position:center center;background-size:cover;transition:transform 1.35s cubic-bezier(.2,.7,.1,1),filter .7s;filter:brightness(.78)}
+.world:hover:before,.world:focus-visible:before{transform:scale(1.055);filter:brightness(.92)}
+.world-aebraeth:before{background-image:url("assets/aebraeth-portal.webp");background-position:center 42%}
+.world-starcity:before{background-image:url("assets/starcity-portal.webp");background-position:center 50%}
+.world:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.46) 0,rgba(0,0,0,0) 27%,rgba(0,0,0,.04) 40%,rgba(2,5,8,.83) 100%)}
+.world-aebraeth:after{background:linear-gradient(180deg,rgba(8,5,3,.44),transparent 29%,rgba(8,4,4,.02) 43%,rgba(12,6,4,.84) 100%)}
+.world-starcity:after{background:linear-gradient(180deg,rgba(0,7,19,.43),transparent 29%,rgba(0,7,19,.08) 43%,rgba(0,8,19,.90) 100%)}
+.world-content{width:100%;padding:clamp(30px,3.4vw,75px) clamp(27px,3.35vw,60px) clamp(49px,8.4vh,88px);position:relative;z-index:2;text-shadow:0 3px 30px rgba(0,0,0,.45)}
+.eyebrow{font-size:clamp(.67rem,.76vw,.78rem);font-weight:800;letter-spacing:.29em;text-transform:uppercase}
+.world-aebraeth .eyebrow{color:var(--gold)}.world-starcity .eyebrow{color:var(--cyan)}
+.world-title{margin:19px 0 18px;line-height:.83;font-weight:600;color:#faf7ed;white-space:normal}
+.world-aebraeth .world-title{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(4.3rem,9.4vw,10rem);font-weight:500;letter-spacing:-.068em}
+.world-starcity .world-title{font-family:"Chakra Petch",sans-serif;font-size:clamp(5.2rem,10.6vw,12rem);font-weight:700;line-height:.88;letter-spacing:-.078em;color:#ecf9ff;text-transform:uppercase}
+.world-starcity .world-title span{display:block}
+.world-sub{color:#f5efea;max-width:450px;font-size:clamp(.89rem,1.35vw,1.12rem);line-height:1.6;font-weight:500;letter-spacing:-.02em}
+.world-action{display:flex;align-items:center;gap:16px;margin-top:30px;font-size:.72rem;letter-spacing:.25em;font-weight:800;text-transform:uppercase}
+.world-action:before{content:"";height:1px;width:41px;background:var(--gold);transition:width .4s}
+.world-starcity .world-action:before{background:var(--cyan)}
+.world:hover .world-action:before{width:79px}.world-action svg{transition:transform .35s}.world:hover .world-action svg{transform:translate(5px,-4px)}
+.top{position:absolute;z-index:5;top:0;left:0;right:0;height:86px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,2.8vw,55px);background:linear-gradient(180deg,rgba(5,5,7,.58),rgba(5,5,7,0))}
+.brand{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(1.2rem,1.9vw,1.9rem);font-weight:600;white-space:nowrap;text-shadow:0 2px 10px #000a}
+.brand strong{font-size:1.18em;color:var(--gold);font-weight:600}.brand span{font-family:Manrope,sans-serif;font-size:.54em;letter-spacing:.19em;font-weight:600;margin-left:5px}
+.nav{display:flex;align-items:center;gap:clamp(16px,2.5vw,37px)}.nav a{font-size:.71rem;letter-spacing:.28em;text-transform:uppercase;font-weight:800;text-shadow:0 3px 10px #0008;transition:color .2s}.nav a:hover{color:var(--gold)}
+.nav .join{border:1px solid rgba(234,190,63,.75);padding:13px 15px;background:rgba(12,4,6,.21)}.nav .join:hover{background:var(--blood);color:var(--white)}
+.central-label{position:absolute;z-index:6;top:clamp(86px,11.5vh,124px);left:50%;transform:translateX(-50%);padding:12px 20px;background:rgba(9,7,8,.67);backdrop-filter:blur(6px);border:1px solid rgba(234,190,63,.3);text-transform:uppercase;color:#f8eace;font-weight:800;font-size:.69rem;letter-spacing:.32em;white-space:nowrap}
+.dia{position:absolute;z-index:4;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(234,190,63,.27) 34%,rgba(234,190,63,.13) 66%,transparent);pointer-events:none}
+.info{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.75);z-index:20;padding:20px}.info[hidden]{display:none}
+.info-box{border:1px solid var(--gold);background:#090708;padding:45px;max-width:490px;width:100%;text-align:center;box-shadow:0 20px 80px #000}
+.info-box h2{font-family:"Cormorant Garamond",serif;font-size:3.4rem;margin:0 0 8px;font-weight:600}
+.info-box p{line-height:1.6;color:#ddd}.info-box button{background:var(--blood);border:1px solid var(--gold);padding:12px 25px;color:#fff;cursor:pointer}
+@media(max-width:1080px){.nav{gap:14px}.nav a{font-size:.61rem;letter-spacing:.13em}.world-aebraeth .world-title{font-size:clamp(4rem,9vw,7rem)}.world-starcity .world-title{font-size:clamp(4.4rem,9vw,9rem)}}
+@media(max-width:670px){
+ .portal{height:100svh;min-height:560px}.top{height:60px;padding:0 18px}.nav a:not(.join){display:none}.nav .join{font-size:.58rem;padding:8px 10px;letter-spacing:.08em}
+ .worlds{flex-direction:column}.world{flex:1 1 50%;min-height:0;transition:none}.world:hover,.world:focus-visible{flex-grow:1}
+ .world:before{inset:0}.world-aebraeth:before{background-position:50% 55%}.world-starcity:before{background-position:center 41%}
+ .world-content{padding:62px 20px 23px}.world-title{margin:7px 0 7px}.world-aebraeth .world-title{font-size:clamp(3.35rem,14vw,5.7rem)}.world-starcity .world-title{font-size:clamp(3.6rem,15vw,5.6rem)}.world-starcity .world-title span{display:inline}
+ .world-starcity .world-title span+span{margin-left:.2em}.world-sub{font-size:.78rem;line-height:1.4;max-width:340px}.world-action{margin-top:13px;font-size:.59rem;gap:8px}
+ .world-action:before{width:24px}.world:hover .world-action:before{width:35px}.eyebrow{font-size:.58rem;letter-spacing:.16em}
+ .central-label{top:70px;font-size:.51rem;letter-spacing:.15em;padding:8px 13px}
+ .dia{top:50%;left:0;right:0;width:auto;height:1px}
+}
+@media(max-width:420px){.world-content{padding-bottom:18px}.world-aebraeth .world-title{font-size:clamp(3rem,13vw,4.6rem)}.world-starcity .world-title{font-size:clamp(3rem,13.7vw,4.8rem)}.world-sub{font-size:.72rem}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important}}
+</style></head>
 <body>
-  <main class="portal" aria-label="Elige tu mundo">
-    <div class="worlds">
-      <button type="button" class="world world-aebraeth" data-world="aebraeth" aria-pressed="false" aria-label="Elegir Aebraeth">
-        <span class="world-content">
-          <span class="world-genre">I · Alta fantasía</span>
-          <h2>Aebraeth</h2>
-          <span class="world-desc">Bosques ancestrales, reinos, océanos y leyendas que cobran vida.</span>
-          <span class="world-enter">Elegir Aebraeth <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 19 19 5M7 5h12v12"/></svg></span>
-        </span>
-      </button>
-      <button type="button" class="world world-starcity" data-world="starcity" aria-pressed="false" aria-label="Elegir Star City">
-        <span class="world-content">
-          <span class="world-genre">II · Cyberpunk RED · 2080+</span>
-          <h2>Star City</h2>
-          <span class="world-desc">Cien millones de vidas. Seis regiones. Poder corporativo y neón.</span>
-          <span class="world-enter">Elegir Star City <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 19 19 5M7 5h12v12"/></svg></span>
-        </span>
-      </button>
-    </div>
-    <div class="brand" aria-label="GM Mitos - Elige tu mundo">
-      <div class="brand-logo">GM MITOS</div>
-      <div class="brand-rule"></div>
-      <div class="brand-sub">ELIGE TU MUNDO</div>
-    </div>
-    <span class="divider" aria-hidden="true"></span>
-    <div class="selection" id="selection">DOS UNIVERSOS · UNA ELECCIÓN</div>
-  </main>
-  <script>
-    const buttons=[...document.querySelectorAll('.world')];
-    const note=document.getElementById('selection');
-    function selectWorld(name,updateHash=true){
-      for(const button of buttons) button.setAttribute('aria-pressed',String(button.dataset.world===name));
-      const world=name==='aebraeth'?'AEBRAETH':'STAR CITY';
-      note.textContent=world+' SELECCIONADO';note.dataset.active='';
-      if(updateHash) history.replaceState(null,'','#'+name);
-    }
-    buttons.forEach(button=>button.addEventListener('click',()=>selectWorld(button.dataset.world)));
-    const initial=location.hash.slice(1);
-    if(['aebraeth','starcity'].includes(initial)) selectWorld(initial,false);
-  </script>
-</body>
-</html>
+<main class="portal" id="entrada" aria-label="Elige tu mundo de GM MITOS">
+  <div class="worlds">
+    <a class="world world-aebraeth" href="?mundo=aebraeth" aria-label="Entrar en Aebraeth, mundo de alta fantasía"><div class="world-content"><p class="eyebrow">I · Alta fantasía</p><h1 class="world-title">Aebraeth</h1><p class="world-sub">Bosques que recuerdan, mares sin cartografiar y un culto que no debería existir.</p><div class="world-action">Entrar al mundo <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5m0 0H9m10 0v10" stroke="currentColor" stroke-width="2"/></svg></div></div></a>
+    <a class="world world-starcity" href="?mundo=starcity" aria-label="Entrar en Star City, mundo Cyberpunk RED"><div class="world-content"><p class="eyebrow">II · Cyberpunk RED · &gt;2080</p><h2 class="world-title"><span>STAR</span><span>CITY</span></h2><p class="world-sub">Cien millones de vidas, seis regiones y una sola autoridad. Todo tiene precio.</p><div class="world-action">Conectar <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5m0 0H9m10 0v10" stroke="currentColor" stroke-width="2"/></svg></div></div></a>
+  </div>
+  <div class="dia" aria-hidden="true"></div>
+  <header class="top"><a href="./" class="brand" aria-label="GM Mitos, inicio"><strong>GM</strong><span>MITOS</span></a><nav class="nav" aria-label="Navegación principal"><a href="?mundo=aebraeth">Aebraeth</a><a href="?mundo=starcity">Star City</a><a href="?pagina=atlas">Atlas y crónicas</a><a href="?pagina=campanas">Campañas</a><a class="join" href="https://mesasroleras.com/gm/mitos" target="_blank" rel="noopener noreferrer">Únete a la mesa</a></nav></header>
+  <div class="central-label">Elige tu mundo</div>
+</main>
+<div class="info" id="info" hidden role="dialog" aria-modal="true" aria-labelledby="infoTitle"><div class="info-box"><h2 id="infoTitle"></h2><p>Este mundo está en preparación. La entrada ya está lista; el interior será la siguiente etapa.</p><button type="button" id="closeInfo">Volver a elegir</button></div></div>
+<script>
+(()=>{const params=new URLSearchParams(location.search),w=params.get("mundo")||params.get("pagina"),modal=document.getElementById("info"),title=document.getElementById("infoTitle"),close=document.getElementById("closeInfo");function show(){const search=new URLSearchParams(location.search),curr=search.get("mundo")||search.get("pagina");if(!["aebraeth","starcity","atlas","campanas"].includes(curr)){modal.hidden=true;return;}title.textContent=({aebraeth:"Aebraeth",starcity:"Star City",atlas:"Atlas y crónicas",campanas:"Campañas"})[curr];modal.hidden=false;close.focus();}
+close.addEventListener("click",()=>{history.pushState(null,"",location.pathname);show()});window.addEventListener("popstate",show);
+document.querySelectorAll('[href^="?mundo="],[href^="?pagina="]').forEach(a=>a.addEventListener("click",e=>{e.preventDefault();history.pushState(null,"",a.getAttribute("href"));show()}));if(w)show();document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!modal.hidden)close.click()})
+})();
+</script></body></html>
